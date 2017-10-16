@@ -1,7 +1,7 @@
 const { Client } = require('pg')
 
 
-const dbUrl = process.env.DATABASE_URL;
+const dbUrl = process.env.DATABASE_URL || 'mylocaldb2';
 
 const sslVal = (process.env.PORT) ? true : false;
 
@@ -16,11 +16,10 @@ client.connect();
 
 // Action: index
 function indexUsers(req, res) {
-  client.query('SELECT * FROM salesforce.contact;', (err, res) => {
+  client.query('SELECT * FROM salesforcenodetest.contact;', (err, res) => {
     if (err) throw err;
     for (let row of res.rows) {
       console.log(JSON.stringify(row));
-      res.send(row);
     }
     client.end();
   });
