@@ -1,19 +1,29 @@
-// var User = require('../models/user-model');
+const { Client } = require('pg')
 
-const connectionString = process.env.DATABASE_URL;
-var pgp = require('pg-promise')(/*options*/);
-var db = pgp(connectionString);
+
+const dbUrl = process.env.DATABASE_URL;
+
+const sslVal = (process.env.PORT) ? true : false;
+
+const client = new Client({
+  connectionString: dbUrl,
+  ssl: sslVal
+});
+
+client.connect();
+
+
 
 // Action: index
 function indexUsers(req, res) {
-  db.many('SELECT * FROM Contact ORDER BY systemmodstamp DESC;')
-    .then(function (data) {
-      console.log('DATA:', data.value);
-      res.send(JSON.stringify(data));
-    })
-    .catch(function (error) {
-      console.log('ERROR:', error);
-    });
+  client.query('SELECT * FROM salesforce.contact;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+      res.send(row);
+    }
+    client.end();
+  });
 
 }
 
