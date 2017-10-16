@@ -5,18 +5,19 @@ var usersController = require('../controllers/users-controller');
 router.get('/', function (req, res) {
   res.render('index', {
     title: 'Test'
-  });
+  })
+    .get(usersController.index);
 });
-router.route('/users')
-  .get(usersController.index)
-  .post(usersController.create);
-
-router.get('/users/new', usersController.new);
-router.get('/users/:id/edit', usersController.edit);
-
-router.route('/users/:id')
-  .put(usersController.update)
-  .get(usersController.show)
-  .delete(usersController.destroy);
+// router.route('/users')
+//   .get(usersController.index)
+//   .post(usersController.create);
+//
+// router.get('/users/new', usersController.new);
+// router.get('/users/:id/edit', usersController.edit);
+//
+// router.route('/users/:id')
+//   .put(usersController.update)
+//   .get(usersController.show)
+//   .delete(usersController.destroy);
 
 module.exports = router;
