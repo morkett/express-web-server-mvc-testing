@@ -6,7 +6,7 @@ var db = pgp(connectionString);
 
 // Action: index
 function indexUsers(req, res) {
-  db.many('SELECT * FROM contact ORDER BY systemmodstamp DESC;')
+  db.many('SELECT * FROM Contact ORDER BY systemmodstamp DESC;')
     .then(function (data) {
       console.log('DATA:', data.value);
       res.send(JSON.stringify(data));
