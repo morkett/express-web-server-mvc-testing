@@ -4,13 +4,13 @@ const connectionString = process.env.DATABASE_URL;
 
 const client = new pg.Client(connectionString);
 client.connect();
-
+var pool = new pg.Pool();
 
 // Action: index
 function indexUsers(req, res) {
   const results = [];
   // Get a Postgres client from the connection pool
-  pg.connect(connectionString, (err, client, done) => {
+  pool.connect(connectionString, (err, client, done) => {
     // Handle connection errors
     if(err) {
       done();
@@ -29,6 +29,7 @@ function indexUsers(req, res) {
       return res.json(results);
     });
   });
+  pool.end();
 }
 
 // function indexUsers(req, res) {
