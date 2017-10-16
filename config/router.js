@@ -4,7 +4,7 @@ var usersController = require('../controllers/users-controller');
 
 router.get('/', function (req, res) {
   res.render('index', {
-    title: 'Home'
+    title: 'Test'
   });
 });
 router.route('/users')
