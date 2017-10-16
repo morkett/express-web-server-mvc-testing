@@ -1,17 +1,3 @@
-// const { Client } = require('pg');
-//
-//
-// const dbUrl = process.env.DATABASE_URL || 'mylocaldb2';
-//
-// const sslVal = (process.env.PORT) ? true : false;
-//
-// const client = new Client({
-//   connectionString: dbUrl,
-//   ssl: sslVal
-// });
-//
-// client.connect();
-
 var promise = require('bluebird');
 var options = {
   // Initialization Options
@@ -25,8 +11,8 @@ var connectionString = dbUrl;
 var db = pgp(connectionString);
 
 
-function indexUsers(req, res, next) {
-  db.any('SELECT * FROM salesforcenodetest.contact;')
+function getContacts(req, res, next) {
+  db.any('SELECT * FROM salesforcenodetest.contact ORDER BY firstname ASC;')
     .then(function (data) {
       res.status(200)
         .render('index', {
@@ -39,28 +25,22 @@ function indexUsers(req, res, next) {
     });
 }
 
-
-
-
-
-
-// // Action: index
-// function indexUsers(req, res) {
-//   client.query('SELECT * FROM salesforcenodetest.contact;', (err, contact) => {
-//     if (err) throw err;
-//     // for (const row of contact.rows) {
-//     //   console.log(JSON.stringify(row));
-//     // }
-//     res.render('index', {
-//       title: 'Test',
-//       data: contact.rows
-//     });
-//   });
-//
-// }
-
+function addContact(req, res, next) {
+  db.none('INSERT into salesforcenodetest.contact(firstname, lastname, email)' + 'values(${firstname}, ${lastname}, ${email})', req.body)
+    .then(() => {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: 'Added contact'
+        });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+}
 
 
 module.exports = {
-  index: indexUsers
+  getContacts: getContacts,
+  addContact: addContact
 };
