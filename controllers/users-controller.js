@@ -18,7 +18,7 @@ function indexUsers(req, res) {
       return res.status(500).json({success: false, data: err});
     }
     // SQL Query > Select Data
-    const query = client.query('SELECT * FROM items ORDER BY id ASC;');
+    const query = client.query('SELECT firstname, lastname, email FROM  salesforce.contact ORDER BY systemmodstamp DESC;');
     // Stream results back one row at a time
     query.on('row', (row) => {
       results.push(row);
