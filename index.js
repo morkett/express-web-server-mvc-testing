@@ -3,11 +3,10 @@ var router = require('./config/router');
 var bodyParser = require('body-parser');
 var layouts = require('express-ejs-layouts');
 var methodOverride = require('method-override');
-// var mongoose = require('mongoose');
+
 var app = express();
 var port = process.env.PORT || 3000;
 
-// mongoose.connect('mongodb://localhost/sg-mvc');
 
 app.set('view engine', 'ejs');
 app.use(function (req, res, next) {

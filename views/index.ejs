@@ -1,1 +1,15 @@
 <p>Example use of Express to build a web app.</p>
+<table>
+  <tr>
+   <th>Firstname</th>
+   <th>Lastname</th>
+   <th>Email</th>
+ </tr>
+ <% for (var i = 0 ; i < data.length ; i++) { %>
+   <tr>
+    <td> <%= data[i].firstname %> </td>
+    <td> <%= data[i].lastname %> </td>
+    <td> <%= data[i].email %> </td>
+   </tr>
+  <% } %>
+</table>

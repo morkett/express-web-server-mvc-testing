@@ -2,13 +2,9 @@ var express = require('express');
 var router = express.Router();
 var usersController = require('../controllers/users-controller');
 
-router.get('/', function (req, res) {
-  res.render('index', {
-    title: 'Test'
-  });
-});
-router.route('/users')
-  .get(usersController.index);
+router.get('/', usersController.index);
+// router.route('/users')
+
 
 //
 // router.get('/users/new', usersController.new);
