@@ -1,53 +1,23 @@
 // var User = require('../models/user-model');
-const pg = require('pg');
-const connectionString = process.env.DATABASE_URL;
 
-const client = new pg.Client(connectionString);
-client.connect();
-var pool = new pg.Pool();
+const connectionString = process.env.DATABASE_URL;
+var pgp = require('pg-promise')(/*options*/);
+var db = pgp(connectionString);
 
 // Action: index
 function indexUsers(req, res) {
-  const results = [];
-  // Get a Postgres client from the connection pool
-  pool.connect(connectionString, (err, client, done) => {
-    // Handle connection errors
-    if(err) {
-      done();
-      console.log(err);
-      return res.status(500).json({success: false, data: err});
-    }
-    // SQL Query > Select Data
-    const query = client.query('SELECT * FROM  salesforce.contact ORDER BY systemmodstamp DESC;');
-    // Stream results back one row at a time
-    query.on('row', (row) => {
-      results.push(row);
+  db.many('SELECT * FROM salesforce.contact ORDER BY systemmodstamp DESC;')
+    .then(function (data) {
+      console.log('DATA:', data.value);
+      res.send(JSON.stringify(data));
+    })
+    .catch(function (error) {
+      console.log('ERROR:', error);
     });
-    // After all data is returned, close connection and return results
-    query.on('end', () => {
-      done();
-      return res.json(results);
-    });
-  });
-  pool.end();
+
 }
 
-// function indexUsers(req, res) {
-//   pg.connect(process.env.DATABASE_URL+'?ssl=true', function(err, client, done) {
-//
-//   client.query('SELECT twitter_handle__c, sfid '+
-//                'FROM salesforce.contact '+
-//                'WHERE contact IS NOT NULL', function(err, result) {
-//
-//       var contacts = {};
-//       console.log('contacts :', contacts);
-//
-//     res.render('users/index', {
-//       title: 'User list',
-//       users: contacts
-//     });
-//   });
-// }
+
 
 module.exports = {
   index: indexUsers
