@@ -56,6 +56,22 @@ function getOneContact(req, res, next) {
     });
 }
 
+function updateContact (req, res, next) {
+  var contactId = req.params.id;
+  db.none('UPDATE salesforcenodetest.contact SET firstname=$1, lastname=$2, email=$3',
+    [req.body.firstname, req.body.lastname, req.body.email])
+    .then(() => {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: `Updated Contact ${req.body.firstname}`
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
 function deleteOneContact(req, res, next) {
   var contactId = req.params.id;
   db.result('DELETE from salesforcenodetest.contact WHERE sfid = $1', contactId)
@@ -76,5 +92,6 @@ module.exports = {
   getContacts: getContacts,
   addContact: addContact,
   getOneContact: getOneContact,
+  updateContact: updateContact,
   deleteOneContact: deleteOneContact
 };
