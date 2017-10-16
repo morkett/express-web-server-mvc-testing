@@ -26,6 +26,7 @@ function getContacts(req, res, next) {
 }
 
 function addContact(req, res, next) {
+  // var upsert = new Date().getTime();
   db.none('INSERT into salesforcenodetest.contact(firstname, lastname, email)' + 'values(${firstname}, ${lastname}, ${email})', req.body)
     .then(() => {
       res.status(200)
