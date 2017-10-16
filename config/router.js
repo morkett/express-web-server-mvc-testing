@@ -5,12 +5,11 @@ var usersController = require('../controllers/users-controller');
 router.get('/', function (req, res) {
   res.render('index', {
     title: 'Test'
-  })
-    .get(usersController.index);
+  });
 });
-// router.route('/users')
-//   .get(usersController.index)
-//   .post(usersController.create);
+router.route('/users')
+  .get(usersController.index);
+
 //
 // router.get('/users/new', usersController.new);
 // router.get('/users/:id/edit', usersController.edit);
