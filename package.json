@@ -16,7 +16,8 @@
     "express": "^4.15.2",
     "express-ejs-layouts": "^2.2.0",
     "method-override": "^2.3.7",
-    "mongoose": "^4.9.0"
+    "mongoose": "^4.9.0",
+    "pg": "^7.3.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
