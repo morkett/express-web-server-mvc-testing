@@ -5,7 +5,7 @@ var layouts = require('express-ejs-layouts');
 var methodOverride = require('method-override');
 // var mongoose = require('mongoose');
 var app = express();
-var port = 3000;
+var port = process.env.PORT || 3000;
 
 // mongoose.connect('mongodb://localhost/sg-mvc');
 
