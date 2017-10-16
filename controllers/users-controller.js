@@ -39,8 +39,41 @@ function addContact(req, res, next) {
     });
 }
 
+function getOneContact(req, res, next) {
+  var contactId = req.params.id;
+  db.one('SELECT * from salesforcenodetest.contact WHERE sfid = $1', contactId)
+    .then( (data) => {
+      res.status(200)
+        .render('users/show', {
+          title: `User: ${data.firstname} ${data.lastname}`,
+          data: data
+        });
+
+    })
+    .catch((err) => {
+      return next(err);
+    });
+}
+
+function deleteOneContact(req, res, next) {
+  var contactId = req.params.id;
+  db.result('DELETE from salesforcenodetest.contact WHERE sfid = $1', contactId)
+    .then((result) => {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: `Removed ${contactId} contact`
+        });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+}
+
 
 module.exports = {
   getContacts: getContacts,
-  addContact: addContact
+  addContact: addContact,
+  getOneContact: getOneContact,
+  deleteOneContact: deleteOneContact
 };

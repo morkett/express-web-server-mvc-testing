@@ -4,7 +4,9 @@ var usersController = require('../controllers/users-controller');
 
 router.get('/', usersController.getContacts);
 router.post('/', usersController.addContact);
-// router.route('/users')
+
+router.get('/contact/:id', usersController.getOneContact);
+router.delete('/contact/:id', usersController.deleteOneContact);
 
 
 //
