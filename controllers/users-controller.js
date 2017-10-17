@@ -58,7 +58,7 @@ function getOneContact(req, res, next) {
 
 function updateContact (req, res, next) {
   var contactId = req.params.id;
-  db.none('UPDATE salesforcenodetest.contact WHERE sfid=$4 SET firstname=$1, lastname=$2, email=$3',
+  db.none('UPDATE salesforcenodetest.contact SET firstname=$1, lastname=$2, email=$3 WHERE sfid =$4',
     [req.body.firstname, req.body.lastname, req.body.email, contactId])
     .then(() => {
       res.status(200)
